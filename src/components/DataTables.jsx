@@ -1,6 +1,6 @@
 import { formatCurrency } from "../utils/formatCurrency";
 
-export function OrderTable({ orders }) {
+export function OrderTable({ orders, onRowClick }) {
   return (
     <div className="table-wrap">
       <table>
@@ -16,7 +16,11 @@ export function OrderTable({ orders }) {
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id}>
+            <tr
+              key={order.idOrden ?? order.id}
+              onClick={() => onRowClick?.(order)}
+              style={{ cursor: onRowClick ? "pointer" : "default" }}
+            >
               <td>
                 <strong className="order-id">{order.id}</strong>
                 <small>{order.issue}</small>
@@ -42,7 +46,7 @@ export function OrderTable({ orders }) {
   );
 }
 
-export function ProductTable({ products }) {
+export function ProductTable({ products, onRowClick }) {
   return (
     <div className="table-wrap">
       <table>
@@ -60,7 +64,11 @@ export function ProductTable({ products }) {
           {products.map((product) => {
             const unitCost = Number(product.cost.replace(/\D/g, ""));
             return (
-              <tr key={product.sku}>
+              <tr
+                key={product.idArticulo ?? product.id ?? product.sku}
+                onClick={() => onRowClick?.(product)}
+                style={{ cursor: onRowClick ? "pointer" : "default" }}
+              >
                 <td>
                   <strong>{product.name}</strong>
                 </td>
@@ -90,7 +98,7 @@ export function ProductTable({ products }) {
   );
 }
 
-export function SalesTable({ sales }) {
+export function SalesTable({ sales, onRowClick }) {
   return (
     <div className="table-wrap">
       <table>
@@ -105,7 +113,11 @@ export function SalesTable({ sales }) {
         </thead>
         <tbody>
           {sales.map((sale) => (
-            <tr key={sale.id}>
+            <tr
+              key={sale.idVenta ?? sale.id}
+              onClick={() => onRowClick?.(sale)}
+              style={{ cursor: onRowClick ? "pointer" : "default" }}
+            >
               <td>
                 <strong className="order-id">{sale.id}</strong>
               </td>
@@ -125,7 +137,7 @@ export function SalesTable({ sales }) {
   );
 }
 
-export function CustomerTable({ customers, totalCustomers }) {
+export function CustomerTable({ customers, totalCustomers, onRowClick }) {
   return (
     <div className="table-wrap">
       <table>
@@ -148,7 +160,11 @@ export function CustomerTable({ customers, totalCustomers }) {
             </tr>
           ) : (
             customers.map((customer, index) => (
-              <tr key={customer.id ?? customer.email ?? index}>
+              <tr
+                key={customer.id ?? customer.email ?? index}
+                onClick={() => onRowClick?.(customer)}
+                style={{ cursor: onRowClick ? "pointer" : "default" }}
+              >
                 <td>{customer.id ?? "-"}</td>
                 <td>
                   <strong>{customer.name}</strong>

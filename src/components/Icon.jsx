@@ -10,6 +10,10 @@ export default function Icon({ type }) {
     plus: "+",
     arrow: "↗",
     close: "×",
+    settings: "⚙",
+    sliders: "≡",
+    lock: "▣",
+    check: "✓",
   };
 
   return (

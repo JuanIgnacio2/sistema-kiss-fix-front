@@ -9,9 +9,15 @@ export default function OrderModal({
   onCustomerChange,
   customerResults,
   onAddCustomer,
+  mode = "create",
+  defaultValues = {},
+  error,
+  saving,
 }) {
+  const isEditing = mode === "edit";
+
   return (
-    <ModalShell title="Nueva orden de reparacion" onClose={onClose}>
+    <ModalShell title={isEditing ? "Editar orden de reparacion" : "Nueva orden de reparacion"} onClose={onClose}>
       <form onSubmit={onSubmit}>
         <div className="field">
           <div className="field-heading">
@@ -51,22 +57,23 @@ export default function OrderModal({
         <FormField
           label="Codigo de orden"
           name="orderCode"
-          defaultValue="KF-2408-019"
+          defaultValue={defaultValues.id ?? defaultValues.idOrden ?? defaultValues.orderCode ?? "KF-2408-019"}
           readOnly
         />
-        <FormField label="Fecha de ingreso" name="entryDate" type="date" required />
+        <FormField label="Fecha de ingreso" name="entryDate" type="date" defaultValue={defaultValues.entryDate ?? defaultValues.fechaIngreso ?? ""} required />
         <FormField
           label="Presupuesto inicial"
           name="initialBudget"
           type="number"
           min="0"
           placeholder="0"
+          defaultValue={defaultValues.initialBudget ?? defaultValues.presupuestoInicial ?? ""}
           required
         />
-        <FormField label="Equipo" name="device" placeholder="Marca y modelo" required />
-        <FormField label="Falla reportada" name="issue" placeholder="Describe el problema" required />
+        <FormField label="Equipo" name="device" placeholder="Marca y modelo" defaultValue={defaultValues.device ?? defaultValues.equipo ?? ""} required />
+        <FormField label="Falla reportada" name="issue" placeholder="Describe el problema" defaultValue={defaultValues.issue ?? defaultValues.fallaReportada ?? ""} required />
         <FormField label="Estado de reparacion">
-          <select name="status" defaultValue="En diagnostico">
+          <select name="status" defaultValue={defaultValues.status ?? defaultValues.estado ?? "En diagnostico"}>
             <option>En diagnostico</option>
             <option>En reparacion</option>
             <option>Esperando repuesto</option>
@@ -74,8 +81,9 @@ export default function OrderModal({
             <option>Entregado</option>
           </select>
         </FormField>
-        <button className="button primary full">
-          Crear orden <Icon type="arrow" />
+        {error && <small className="customer-empty">{error}</small>}
+        <button className="button primary full" disabled={saving}>
+          {saving ? "Guardando..." : isEditing ? "Actualizar orden" : "Crear orden"} <Icon type="arrow" />
         </button>
       </form>
     </ModalShell>

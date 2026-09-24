@@ -10,14 +10,36 @@ export default function ProductModal({
   onCostChange,
   onPriceChange,
   formatCurrency,
+  mode = "create",
+  defaultValues = {},
+  error,
+  saving,
+  categories = [],
 }) {
+  const isEditing = mode === "edit";
+
   return (
-    <ModalShell title="Agregar articulo" onClose={onClose}>
+    <ModalShell title={isEditing ? "Editar articulo" : "Agregar articulo"} onClose={onClose}>
       <form onSubmit={onSubmit}>
-        <FormField label="Nombre del articulo" name="name" placeholder="Ej: Pantalla iPhone 14" required />
-        <FormField label="SKU" name="sku" placeholder="REP-000-01" required />
-        <FormField label="Marca" name="brand" placeholder="Ej: Apple, Samsung" required />
-        <FormField label="Stock inicial" name="stock" type="number" min="0" placeholder="0" required />
+        <FormField label="Nombre del articulo" name="name" placeholder="Ej: Pantalla iPhone 14" defaultValue={defaultValues.name ?? defaultValues.nombre ?? ""} required />
+        <FormField label="SKU" name="sku" placeholder="REP-000-01" defaultValue={defaultValues.sku ?? ""} required />
+        <FormField label="Marca" name="brand" placeholder="Ej: Apple, Samsung" defaultValue={defaultValues.brand ?? defaultValues.marca ?? ""} required />
+        <FormField label="Categoria">
+          <select name="categoryId" defaultValue={defaultValues.categoryId ?? defaultValues.categoriaId ?? ""} required>
+            <option value="">Seleccionar categoria</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.nombre}
+              </option>
+            ))}
+          </select>
+        </FormField>
+        <FormField label="Modelo" name="model" placeholder="Ej: A2890" defaultValue={defaultValues.model ?? defaultValues.modelo ?? ""} />
+        <FormField label="Descripcion" name="description" placeholder="Descripcion del articulo" defaultValue={defaultValues.description ?? defaultValues.descripcion ?? ""} />
+        <FormField label="Stock inicial" name="stock" type="number" min="0" placeholder="0" defaultValue={defaultValues.stock ?? ""} required />
+        <FormField label="Stock minimo" name="minStock" type="number" min="0" placeholder="0" defaultValue={defaultValues.min ?? defaultValues.stockminimo ?? "0"} required />
+        <FormField label="Codigo de barras" name="barcode" placeholder="Codigo de barras" defaultValue={defaultValues.barcode ?? defaultValues.codigoBarras ?? ""} />
+        <FormField label="Unidad de medida" name="unitMeasure" placeholder="Ej: unidad" defaultValue={defaultValues.unitMeasure ?? defaultValues.unidadMedida ?? "unidad"} />
         <FormField label="Precio de costo">
           <input name="cost" type="number" min="0" placeholder="$ 0" value={productCost} onChange={onCostChange} required />
         </FormField>
@@ -38,8 +60,13 @@ export default function ProductModal({
             readOnly
           />
         </FormField>
-        <button className="button primary full">
-          Guardar articulo <Icon type="arrow" />
+        <label className="admin-toggle">
+          <span>Producto activo</span>
+          <input name="active" type="checkbox" defaultChecked={defaultValues.active ?? defaultValues.activo ?? true} />
+        </label>
+        {error && <small className="customer-empty">{error}</small>}
+        <button className="button primary full" disabled={saving}>
+          {saving ? "Guardando..." : isEditing ? "Actualizar articulo" : "Guardar articulo"} <Icon type="arrow" />
         </button>
       </form>
     </ModalShell>
