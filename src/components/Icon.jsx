@@ -5,6 +5,7 @@ export default function Icon({ type }) {
     cart: "⊞",
     box: "◫",
     device: "▣",
+    store: "▤",
     users: "◌",
     search: "⌕",
     bell: "◔",

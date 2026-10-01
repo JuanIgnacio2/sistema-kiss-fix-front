@@ -212,4 +212,38 @@ export const updateEstado = (idEstado, estado = {}) => {
     return axiosClient.put(`/estados-orden/${idEstado}`, payload).then((response) => response.data);
 };
 
+export const getProveedores = () => {
+    return axiosClient.get('/proveedores').then((response) => response.data);
+}
 
+export const createProveedor = (proveedor = {}) => {
+    const payload = {
+        razonSocial: proveedor.razonSocial ?? proveedor.businessName ?? '',
+        nombreContacto: proveedor.nombreContacto ?? proveedor.name ?? '',
+        cuit: proveedor.cuit ?? proveedor.taxId ?? '',
+        telefono: proveedor.telefono ?? proveedor.phone ?? null,
+        email: proveedor.email ?? null,
+        direccion: proveedor.direccion ?? proveedor.address ?? null,
+        localidad: proveedor.localidad ?? proveedor.city ?? null,
+        observaciones: proveedor.observaciones ?? proveedor.observations ?? null,
+        activo: proveedor.activo ?? true,
+    };
+
+    return axiosClient.post('/proveedores', payload).then((response) => response.data);
+}
+
+export const updateProveedor = (idProveedor, proveedor = {}) => {
+    const payload = {
+        razonSocial: proveedor.razonSocial ?? proveedor.businessName ?? '',
+        nombreContacto: proveedor.nombreContacto ?? proveedor.name ?? '',
+        cuit: proveedor.cuit ?? proveedor.taxId ?? '',
+        telefono: proveedor.telefono ?? proveedor.phone ?? null,
+        email: proveedor.email ?? null,
+        direccion: proveedor.direccion ?? proveedor.address ?? null,
+        localidad: proveedor.localidad ?? proveedor.city ?? null,
+        observaciones: proveedor.observaciones ?? proveedor.observations ?? null,
+        activo: proveedor.activo ?? true,
+    };
+
+    return axiosClient.put(`/proveedores/${idProveedor}`, payload).then((response) => response.data);
+}

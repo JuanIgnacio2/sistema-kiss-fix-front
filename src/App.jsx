@@ -24,6 +24,7 @@ import ProductsView from "./views/ProductsView";
 import SalesView from "./views/SalesView";
 import GeneralAdministrationView from "./views/GeneralAdministrationView";
 import EquipmentsView from "./views/EquipmentsView";
+import SuppliersView from "./views/SuppliersView";
 
 const initialOrders = [
   {
@@ -87,6 +88,7 @@ const navItems = [
   ["box", "Stock"],
   ["device", "Equipos"],
   ["users", "Clientes"],
+  ["store", "Proveedores"],
   ["settings", "Administracion General"],
 ];
 
@@ -833,7 +835,7 @@ function App() {
                   : `Gestiona tus ${active.toLowerCase()} desde aqui.`}
               </p>
             </div>
-            {active !== "Administracion General" && active !== "Equipos" && (
+            {active !== "Administracion General" && active !== "Equipos" && active !== "Proveedores" && (
               <div className="heading-actions">
                 <button
                   className="button secondary"
@@ -873,6 +875,8 @@ function App() {
             <GeneralAdministrationView />
           ) : active === "Equipos" ? (
             <EquipmentsView customers={customerRows} query={query} />
+          ) : active === "Proveedores" ? (
+            <SuppliersView query={query} />
           ) : (
             <section className="panel orders-panel">
               <div className="panel-heading">
