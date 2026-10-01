@@ -105,20 +105,42 @@ export const getEquipos = () => {
 
 export const createEquipo = (equipo = {}) => {
     const payload = {
-        nombre: equipo.nombre ?? equipo.name ?? '',
-        descripcion: equipo.descripcion ?? null,
-        activo: equipo.activo ?? true,
+        idCliente: Number(equipo.idCliente ?? equipo.idcliente ?? equipo.customerId ?? null),
+        idTipo: Number(equipo.idTipo ?? equipo.tipoEquipoId ?? equipo.deviceTypeId ?? null),
+        marca: equipo.marca ?? equipo.brand ?? '',
+        modelo: equipo.modelo ?? equipo.model ?? '',
+        numeroSerie: equipo.numeroSerie ?? equipo.serialNumber ?? '',
+        contraseNa: equipo.contraseña ?? equipo.password ?? '',
+        observaciones: equipo.observaciones ?? equipo.observations ?? null,
+        color: equipo.color ?? null,
+        imei1: equipo.imei1 ?? null,
+        imei2: equipo.imei2 ?? null,
     };
 
+    return axiosClient.post('/equipos', payload).then((response) => response.data);
+};
 export const updateEquipo = (idEquipo, equipo = {}) => {
-        const payload = {
-            nombre: equipo.nombre ?? equipo.name ?? '',
-            descripcion: equipo.descripcion ?? null,
-            activo: equipo.activo ?? true,
-        };
+    const payload = {
+        idCliente: Number(equipo.idCliente ?? equipo.idcliente ?? equipo.customerId ?? null),
+        idTipo: Number(equipo.idTipo ?? equipo.tipoEquipoId ?? equipo.deviceTypeId ?? null),
+        marca: equipo.marca ?? equipo.brand ?? '',
+        modelo: equipo.modelo ?? equipo.model ?? '',
+        numeroSerie: equipo.numeroSerie ?? equipo.serialNumber ?? '',
+        contrasena: equipo.contrasena ?? equipo.password ?? '',
+        observaciones: equipo.observaciones ?? equipo.observations ?? null,
+        color: equipo.color ?? null,
+        imei1: equipo.imei1 ?? null,
+        imei2: equipo.imei2 ?? null,
+    };
 
-export const getTipoEquipo = (idEquipo, equipo = {}) => {
+    return axiosClient.put(`/equipos/${idEquipo}`, payload).then((response) => response.data);
+};
+export const getTipoEquipo = (idEquipo) => {
     return axiosClient.get(`/tipos-equipo/${idEquipo}`).then((response) => response.data);
+};
+
+export const getTiposEquipo = () => {
+    return axiosClient.get('/tipos-equipo').then((response) => response.data);
 };
     
 export const createTipoEquipo = (tipoEquipo = {}) => {

@@ -2,7 +2,7 @@ import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import babel from '@rolldown/plugin-babel'
 import { defineConfig } from 'vite'
 
-const backendTarget = 'http://192.168.1.101:8080'
+const backendTarget = 'http://192.168.1.105:8080'
 
 export default defineConfig({
   plugins: [

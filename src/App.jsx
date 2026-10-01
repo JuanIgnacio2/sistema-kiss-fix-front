@@ -23,6 +23,7 @@ import OrdersView from "./views/OrdersView";
 import ProductsView from "./views/ProductsView";
 import SalesView from "./views/SalesView";
 import GeneralAdministrationView from "./views/GeneralAdministrationView";
+import EquipmentsView from "./views/EquipmentsView";
 
 const initialOrders = [
   {
@@ -84,6 +85,7 @@ const navItems = [
   ["wrench", "Ordenes de reparacion"],
   ["cart", "Ventas"],
   ["box", "Stock"],
+  ["device", "Equipos"],
   ["users", "Clientes"],
   ["settings", "Administracion General"],
 ];
@@ -831,7 +833,7 @@ function App() {
                   : `Gestiona tus ${active.toLowerCase()} desde aqui.`}
               </p>
             </div>
-            {active !== "Administracion General" && (
+            {active !== "Administracion General" && active !== "Equipos" && (
               <div className="heading-actions">
                 <button
                   className="button secondary"
@@ -869,6 +871,8 @@ function App() {
             />
           ) : active === "Administracion General" ? (
             <GeneralAdministrationView />
+          ) : active === "Equipos" ? (
+            <EquipmentsView customers={customerRows} query={query} />
           ) : (
             <section className="panel orders-panel">
               <div className="panel-heading">

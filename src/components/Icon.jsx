@@ -4,6 +4,7 @@ export default function Icon({ type }) {
     wrench: "⌁",
     cart: "⊞",
     box: "◫",
+    device: "▣",
     users: "◌",
     search: "⌕",
     bell: "◔",
